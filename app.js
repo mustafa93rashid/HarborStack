@@ -5,7 +5,17 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+const logger = (req, res, next) => {
+  const timestamp = new Date().toISOString();
+  const method = req.method;
+  const url = req.url;
+  const ip = req.ip 
 
+  console.log(`[${timestamp}] ${method} ${url} - IP: ${ip}`);
+
+  next(); // مهم جدًا
+};
+app.use(logger);
 // Database
 let { crews, shifts } = require("./data")
 
@@ -24,7 +34,7 @@ app.get("/api/v1/crews", (req, res) => {
 app.get("/api/v1/crews/:id", (req, res) => {
     const id = +req.params.id;
     const crew = crews.find((e) => e.id === id)
-    if (!crews) {
+    if (!crew) {
         return res.status(404).json({
             Message: "this crews does not exist",
             data: null
@@ -105,7 +115,7 @@ app.get("/api/v1/shifts", (req, res) => {
 app.get("/api/v1/shifts/:id", (req, res) => {
     const id = +req.params.id;
     const shift = shifts.find((e) => e.id === id)
-    if (!shifts) {
+    if (!shift) {
         return res.status(404).json({
             Message: "this shifts does not exist",
             data: null
