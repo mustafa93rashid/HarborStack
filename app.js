@@ -78,6 +78,40 @@ const validateCrewExists = (req, res, next) => {
   next();
 };
 
+// Validation Middleware — Shift Dates
+// Validates that the startsAt and endsAt fields in the request body are in valid ISO date format and that endsAt is after startsAt before allowing shift creation or update
+// ─────────────────────────────────────────────
+const validateShiftDates = (req, res, next) => {
+  const { startsAt, endsAt } = req.body;
+  const errors = [];
+
+  const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
+  if (!isoDateRegex.test(startsAt)) {
+    errors.push("startsAt must be a valid ISO date format like 2026-04-24T10:00:00.000Z");
+  }
+
+  if (!isoDateRegex.test(endsAt)) {
+    errors.push("endsAt must be a valid ISO date format like 2026-04-24T18:00:00.000Z");
+  }
+
+  const startDate = new Date(startsAt);
+  const endDate = new Date(endsAt);
+
+  if (startDate >= endDate) {
+    errors.push("endsAt must be after startsAt");
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).json({
+      Message: "Date Validation Error",
+      errors,
+    });
+  }
+
+  next();
+};
+
 // Database
 let { crews, shifts } = require("./data");
 
@@ -203,7 +237,7 @@ app.get("/api/v1/shifts/:id", (req, res) => {
 });
 
 // Create shifts
-app.post("/api/v1/shifts", validateShift, validateCrewExists, (req, res) => {
+app.post("/api/v1/shifts", validateShift, validateCrewExists, validateShiftDates, (req, res) => {
   const { crewId, berth, startsAt, endsAt } = req.body;
 
   const data = {
@@ -223,7 +257,7 @@ app.post("/api/v1/shifts", validateShift, validateCrewExists, (req, res) => {
 });
 
 // Update Shift
-app.put("/api/v1/shifts/:id", validateShift, validateCrewExists, (req, res) => {
+app.put("/api/v1/shifts/:id", validateShift, validateCrewExists, validateShiftDates, (req, res) => {
   const id = +req.params.id;
   const shift = shifts.find((e) => e.id === id);
 
