@@ -262,7 +262,7 @@ All errors follow this structure:
 
 ## 📜 License
 
-MIT License ©️
+Mustafa Rashid Abbas
 
 ---
 
