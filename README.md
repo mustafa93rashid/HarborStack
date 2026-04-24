@@ -3,31 +3,32 @@
 A RESTful API built with Node.js and Express.js to manage harbor crew members and their assigned shifts.
 Designed with clean architecture, validation, and scalable structure in mind.
 
-📋 Table of Contents
-📖 Overview
-🛠️ Tech Stack
-📂 Project Structure
-🚀 Getting Started
-⚙️ Environment Variables
-📡 API Reference
-👷 Crews
-⏱️ Shifts
-🧩 Middleware
-❗ Error Handling
-📖 Overview
+- 📋 Table of Contents
+- 📖 Overview
+- 🛠️ Tech Stack
+- 📂 Project Structure
+- 🚀 Getting Started
+- ⚙️ Environment Variables
+- 📡 API Reference
+- 👷 Crews
+- ⏱️ Shifts
+- 🧩 Middleware
+- ❗ Error Handling
+- 📖 Overview
 
 This API acts as a backend system for harbor operations, allowing you to:
 
-👷 Manage crew members (Create, Read, Update, Delete)
-⏱️ Assign and manage shifts
-✅ Validate all incoming data
-📊 Log every request (method, URL, IP, timestamp)
-🛠️ Tech Stack
+-👷 Manage crew members (Create, Read, Update, Delete)
+-⏱️ Assign and manage shifts
+-✅ Validate all incoming data
+-📊 Log every request (method, URL, IP, timestamp)
+-🛠️ Tech Stack
+
 Technology	Purpose
-🟢 Node.js	Runtime Environment
-⚡ Express.js	Web Framework
-🔐 dotenv	Environment Variables
-📂 Project Structure
+-🟢 Node.js	Runtime Environment
+-🔐 dotenv	Environment Variables
+-📂 Project Structure
+
 project-root/
 ├── index.js        # 🚀 Main server entry point
 ├── data.js         # 📦 Mock database (crews & shifts)
@@ -37,6 +38,7 @@ project-root/
 🔧 Prerequisites
 Node.js v14+
 npm
+
 📥 Installation
 # 1. Clone the repository
 git clone <your-repo-url>
